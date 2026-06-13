@@ -30,7 +30,7 @@ Pieterjan Criel is an Engineering Manager, AI leader, and builder of intelligent
 
 ## Links
 
-- **Website:** https://pjcr.github.io/pp/
+- **Website:** https://pieterjancriel.github.io/pp/
 - **X / Twitter:** https://x.com/pjcr
 - **LinkedIn:** https://www.linkedin.com/in/pieterjancriel/
 - **Medium:** https://medium.com/@pjcr
