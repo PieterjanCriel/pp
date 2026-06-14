@@ -1,3 +1,57 @@
+/* ---- Theme tokens ---- */
+:root {
+  --hero-bg: linear-gradient(135deg, #FF6B35 0%, #F7C59F 55%, #EFEFD0 100%);
+  --name-color: #1a1a1a;
+  --bio-color: #444;
+  --badge-bg: white;
+  --badge-color: #FF6B35;
+  --focus-color: #1a1a1a;
+  --switcher-bg: rgba(0, 0, 0, 0.12);
+  --switcher-color: #1a1a1a;
+  --switcher-hover-bg: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] {
+  --hero-bg: linear-gradient(135deg, #1C0900 0%, #2A1500 40%, #16213e 100%);
+  --name-color: #F5F0E8;
+  --bio-color: #A89080;
+  --badge-bg: #FF6B35;
+  --badge-color: white;
+  --focus-color: #F5F0E8;
+  --switcher-bg: rgba(255, 255, 255, 0.12);
+  --switcher-color: #F5F0E8;
+  --switcher-hover-bg: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="anxiety"] {
+  --name-color: white;
+  --bio-color: rgba(255, 255, 255, 0.85);
+  --badge-bg: white;
+  --badge-color: #FF0000;
+  --focus-color: white;
+  --switcher-bg: rgba(255, 0, 0, 0.15);
+  --switcher-color: white;
+  --switcher-hover-bg: rgba(255, 0, 0, 0.3);
+}
+
+/* ---- Anxiety animations ---- */
+@keyframes anxiety-bg {
+  0%   { background: #FF0000; }
+  25%  { background: #FF0066; }
+  50%  { background: #CC00FF; }
+  75%  { background: #FF6600; }
+  100% { background: #FF0000; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20%       { transform: translateX(-4px) rotate(-1deg); }
+  40%       { transform: translateX(4px) rotate(1deg); }
+  60%       { transform: translateX(-3px) rotate(-0.5deg); }
+  80%       { transform: translateX(3px) rotate(0.5deg); }
+}
+
+/* ---- Base reset ---- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -9,6 +63,7 @@ body {
   min-height: 100vh;
 }
 
+/* ---- Hero ---- */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -17,13 +72,18 @@ body {
   justify-content: center;
   text-align: center;
   padding: 48px 24px;
-  background: linear-gradient(135deg, #FF6B35 0%, #F7C59F 55%, #EFEFD0 100%);
+  background: var(--hero-bg);
 }
 
+[data-theme="anxiety"] .hero {
+  animation: anxiety-bg 1.5s steps(1) infinite;
+}
+
+/* ---- Badge ---- */
 .badge {
   display: inline-block;
-  background: white;
-  color: #FF6B35;
+  background: var(--badge-bg);
+  color: var(--badge-color);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 3px;
@@ -33,23 +93,30 @@ body {
   margin-bottom: 28px;
 }
 
+/* ---- Name ---- */
 .name {
   font-size: clamp(48px, 10vw, 80px);
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -2px;
-  color: #1a1a1a;
+  color: var(--name-color);
   margin-bottom: 20px;
 }
 
+[data-theme="anxiety"] .name {
+  animation: shake 0.4s ease-in-out infinite;
+}
+
+/* ---- Bio ---- */
 .bio {
   font-size: 16px;
-  color: #444;
+  color: var(--bio-color);
   line-height: 1.6;
   max-width: 380px;
   margin-bottom: 36px;
 }
 
+/* ---- Links ---- */
 .links {
   display: flex;
   gap: 12px;
@@ -74,7 +141,7 @@ body {
 }
 
 .btn:focus-visible {
-  outline: 2px solid #1a1a1a;
+  outline: 2px solid var(--focus-color);
   outline-offset: 2px;
 }
 
@@ -96,4 +163,48 @@ body {
 .btn-agent {
   background: #7C3AED;
   color: white;
+}
+
+/* ---- Theme switcher ---- */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  background: var(--switcher-bg);
+  color: var(--switcher-color);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--switcher-hover-bg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="anxiety"] .hero {
+    animation: none;
+    background: #FF0000;
+  }
+  [data-theme="anxiety"] .name {
+    animation: none;
+  }
+  .btn {
+    transition: none;
+  }
+  .theme-toggle {
+    transition: none;
+  }
 }
