@@ -57,11 +57,11 @@ function cycleMode() {
 applyMode(localStorage.getItem('theme-mode') || 'system')
 
 // Wire up button
-document.getElementById('themeToggle').addEventListener('click', cycleMode)
+const toggleBtn = document.getElementById('themeToggle')
+if (toggleBtn) toggleBtn.addEventListener('click', cycleMode)
 
 // Track OS preference changes while in system mode
 mq.addEventListener('change', () => {
-  if ((localStorage.getItem('theme-mode') || 'system') === 'system') {
-    applyMode('system')
-  }
+  const currentMode = localStorage.getItem('theme-mode') || 'system'
+  if (currentMode === 'system') applyMode('system')
 })
